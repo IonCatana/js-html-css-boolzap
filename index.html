@@ -14,7 +14,7 @@
 
 <body class="debug">
 
-  <main>
+  <main id="app">
     <!-- SIDEBAR -->
     <section class="sidebar">
       <!-- Profile section -->
@@ -48,33 +48,44 @@
 
       <!-- Chats section -->
       <div class="chat-wrapper">
-        <div class="chat">
+
+        <div class="chat" v-for="contact in contacts">
           <div class="avatar">
-            <img src="https://picsum.photos/60/60" alt="">
+            <img :src="contact.avatar" alt="">
           </div>
           <div class="chat_info">
             <div class="chat_header">
-              <div class="chat_title">Tizio Caio</div>
-              <div class="chat_last-date">28/02/2022</div>
+              <div class="chat_title">{{ contact.name }}</div>
+              <div class="chat_last-date">{{ contact.messages[contact.messages.length - 1].date }}</div>
             </div>
-            <div class="chat_last-message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, similique
-              tenetur aliquam officiis expedita ea quaerat laboriosam, cupiditate tempore at nobis perspiciatis eligendi
-              doloribus molestiae eum rerum, dolor magni adipisci.</div>
+            <div class="chat_last-message">{{ contact.messages[contact.messages.length - 1].text }}</div>
           </div>
         </div>
 
-        <div class="chat">
-          <div class="avatar">
-            <img src="https://picsum.photos/55/55" alt="">
-          </div>
-          <div class="chat_info">
-            <div class="chat_header">
-              <div class="chat_title">Sempronio</div>
-              <div class="chat_last-date">28/02/2022</div>
+        <!-- <div class="chat">
+               <div class="avatar">
+                  <img src="https://picsum.photos/60/60" alt="">
+               </div>
+               <div class="chat_info">
+                  <div class="chat_header">
+                     <div class="chat_title">Tizio Caio</div>
+                     <div class="chat_last-date">28/02/2022</div>
+                  </div>
+                  <div class="chat_last-message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, similique tenetur aliquam officiis expedita ea quaerat laboriosam, cupiditate tempore at nobis perspiciatis eligendi doloribus molestiae eum rerum, dolor magni adipisci.</div>
+               </div>
             </div>
-            <div class="chat_last-message">Lorem</div>
-          </div>
-        </div>
+            <div class="chat active">
+               <div class="avatar">
+                  <img src="https://picsum.photos/55/55" alt="">
+               </div>
+               <div class="chat_info">
+                  <div class="chat_header">
+                     <div class="chat_title">Sempronio</div>
+                     <div class="chat_last-date">28/02/2022</div>
+                  </div>
+                  <div class="chat_last-message">Lorem</div>
+               </div>
+            </div> -->
 
       </div>
     </section>
@@ -104,7 +115,23 @@
 
       <!--  -->
       <div class="selected-chat_content">
+        <div class="message-wrapper received">
+          <div class="message">
+            <div class="message-text">
+              Ciao! Come stai?
+            </div>
+            <div class="message-date">13:00</div>
+          </div>
+        </div>
 
+        <div class="message-wrapper sent">
+          <div class="message">
+            <div class="message-text">
+              Tutto bene, grazie
+            </div>
+            <div class="message-date">13:00</div>
+          </div>
+        </div>
       </div>
 
       <!-- Footer -->
