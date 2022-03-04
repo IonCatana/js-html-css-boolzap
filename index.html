@@ -12,9 +12,9 @@
   <title>Boolzap</title>
 </head>
 
-<body>
+<body class="debug">
 
-  <main id="#app">
+  <main>
     <!-- SIDEBAR -->
     <section class="sidebar">
       <!-- Profile section -->
@@ -57,7 +57,9 @@
               <div class="chat_title">Tizio Caio</div>
               <div class="chat_last-date">28/02/2022</div>
             </div>
-            <div class="chat_last-message">Lorem</div>
+            <div class="chat_last-message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, similique
+              tenetur aliquam officiis expedita ea quaerat laboriosam, cupiditate tempore at nobis perspiciatis eligendi
+              doloribus molestiae eum rerum, dolor magni adipisci.</div>
           </div>
         </div>
 
@@ -78,8 +80,46 @@
     </section>
 
     <!-- MAIN CONTENT -->
-    <section class="main-content">
+    <section class="selected-chat">
+      <!-- Header -->
+      <div class="selected-chat_header">
+        <div class="selected-chat_user-info">
+          <div class="avatar">
+            <img src="https://picsum.photos/51/51" alt="">
+          </div>
+          <div class="selected-chat_user-desc">
+            <div class="chat_title">Tizio Caio</div>
+            <div class="chat_user-state">Online</div>
+          </div>
+        </div>
+        <div class="profile-controls">
+          <div class="icon-wrapper">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+          <div class="icon-wrapper">
+            <i class="fa-solid fa-ellipsis"></i>
+          </div>
+        </div>
+      </div>
 
+      <!--  -->
+      <div class="selected-chat_content">
+
+      </div>
+
+      <!-- Footer -->
+      <div class="selected-chat_footer">
+        <div class="icon-wrapper">
+          <i class="fa-regular fa-face-smile"></i>
+        </div>
+        <div class="icon-wrapper">
+          <i class="fa-solid fa-paperclip"></i>
+        </div>
+        <input type="text" name="write" id="write" placeholder="Scrivi un messaggio">
+        <div class="icon-wrapper">
+          <i class="fa-solid fa-microphone"></i>
+        </div>
+      </div>
     </section>
   </main>
 
