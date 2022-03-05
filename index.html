@@ -15,6 +15,7 @@
 <body class="debug">
 
   <main id="app">
+    
     <!-- SIDEBAR -->
     <section class="sidebar">
       <!-- Profile section -->
@@ -49,7 +50,8 @@
       <!-- Chats section -->
       <div class="chat-wrapper">
 
-        <div class="chat" v-for="contact in contacts">
+        <div class="chat" v-for="(contact, i) in contacts" @click="selectChat(contact, i, contacts)"
+          :class="{'active' : contact.active}">
           <div class="avatar">
             <img :src="contact.avatar" alt="">
           </div>
@@ -61,45 +63,19 @@
             <div class="chat_last-message">{{ contact.messages[contact.messages.length - 1].text }}</div>
           </div>
         </div>
-
-        <!-- <div class="chat">
-               <div class="avatar">
-                  <img src="https://picsum.photos/60/60" alt="">
-               </div>
-               <div class="chat_info">
-                  <div class="chat_header">
-                     <div class="chat_title">Tizio Caio</div>
-                     <div class="chat_last-date">28/02/2022</div>
-                  </div>
-                  <div class="chat_last-message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, similique tenetur aliquam officiis expedita ea quaerat laboriosam, cupiditate tempore at nobis perspiciatis eligendi doloribus molestiae eum rerum, dolor magni adipisci.</div>
-               </div>
-            </div>
-            <div class="chat active">
-               <div class="avatar">
-                  <img src="https://picsum.photos/55/55" alt="">
-               </div>
-               <div class="chat_info">
-                  <div class="chat_header">
-                     <div class="chat_title">Sempronio</div>
-                     <div class="chat_last-date">28/02/2022</div>
-                  </div>
-                  <div class="chat_last-message">Lorem</div>
-               </div>
-            </div> -->
-
       </div>
     </section>
 
     <!-- MAIN CONTENT -->
-    <section class="selected-chat">
+    <section class="selected-chat" v-for="contact in contacts" v-if="contact.active">
       <!-- Header -->
       <div class="selected-chat_header">
         <div class="selected-chat_user-info">
           <div class="avatar">
-            <img src="https://picsum.photos/60/60" alt="">
+            <img :src="contact.avatar" alt="">
           </div>
           <div class="selected-chat_user-desc">
-            <div class="chat_title">Sempronio</div>
+            <div class="chat_title">{{ contact.name }}</div>
             <div class="chat_user-state">Online</div>
           </div>
         </div>
@@ -113,25 +89,17 @@
         </div>
       </div>
 
-      <!--  -->
+      
       <div class="selected-chat_content">
-        <div class="message-wrapper received">
+        <div v-for="message in contact.messages"
+          :class="{'message-wrapper' : true, 'sent' : message.status === 'sent', 'received' : message.status === 'received'}">
           <div class="message">
-            <div class="message-text">
-              Ciao! Come stai?
-            </div>
-            <div class="message-date">13:00</div>
+            <div class="message-text">{{ message.text }}</div>
+            <div class="message-date">{{ message.date }}</div>
           </div>
         </div>
 
-        <div class="message-wrapper sent">
-          <div class="message">
-            <div class="message-text">
-              Tutto bene, grazie
-            </div>
-            <div class="message-date">13:00</div>
-          </div>
-        </div>
+      
       </div>
 
       <!-- Footer -->

@@ -2,11 +2,13 @@ var app = new Vue({
   el: '#app',
   data: {
     // Array oggetti
+    activeIndex: 0,
     contacts: [
       {
         name: 'Michele',
         avatar: 'https://picsum.photos/60/60',
         visible: true,
+        active: true,
         messages: [
           {
             date: '10/01/2020 15:30:55',
@@ -29,6 +31,7 @@ var app = new Vue({
         name: 'Fabio',
         avatar: 'https://picsum.photos/61/61',
         visible: true,
+        active: false,
         messages: [
           {
             date: '20/03/2020 16:30:00',
@@ -51,6 +54,7 @@ var app = new Vue({
         name: 'Samuele',
         avatar: 'https://picsum.photos/62/62',
         visible: true,
+        active: false,
         messages: [
           {
             date: '28/03/2020 10:10:40',
@@ -73,6 +77,7 @@ var app = new Vue({
         name: 'Luisa',
         avatar: 'https://picsum.photos/63/63',
         visible: true,
+        active: false,
         messages: [
           {
             date: '10/01/2020 15:30:55',
@@ -88,7 +93,17 @@ var app = new Vue({
       },
     ],
   },
-  methods: {},
+  methods: {
+    selectChat: function (el, i, array) {
+      array.forEach((element) => {
+        element.active = false;
+      });
+
+      el.active = true;
+      activeIndex = i;
+      console.log(activeIndex);
+    },
+  },
 });
 
 function getRandomIntInclusive(min, max) {
