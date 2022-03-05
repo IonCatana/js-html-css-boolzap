@@ -15,71 +15,78 @@
 <body class="debug">
 
   <main id="app">
-    
+
     <!-- SIDEBAR -->
-    <section class="sidebar">
-      <!-- Profile section -->
-      <div class="profile-section">
-        <div class="avatar">
-          <img src="https://picsum.photos/50/50" alt="">
-        </div>
-        <div class="profile-controls">
-          <div class="icon-wrapper">
-            <i class="fa-solid fa-circle-notch"></i>
-          </div>
-          <div class="icon-wrapper">
-            <i class="fa-solid fa-plus"></i>
-          </div>
-          <div class="icon-wrapper">
-            <i class="fa-solid fa-ellipsis"></i>
-          </div>
-        </div>
-      </div>
+    <div class="sidebar">
 
-      <!-- Search section -->
-      <div class="search-section">
-        <div class="search-btn">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <!-- <i class="fa-solid fa-arrow-left"></i> -->
-        </div>
-        <div class="search-bar">
-          <input type="text" name="search" id="search" placeholder="Cerca o inizia una nuova chat">
-        </div>
-      </div>
-
-      <!-- Chats section -->
-      <div class="chat-wrapper">
-
-        <div class="chat" v-for="(contact, i) in contacts" @click="selectChat(contact, i, contacts)"
-          :class="{'active' : contact.active}">
-          <div class="avatar">
-            <img :src="contact.avatar" alt="">
-          </div>
-          <div class="chat_info">
-            <div class="chat_header">
-              <div class="chat_title">{{ contact.name }}</div>
-              <div class="chat_last-date">{{ contact.messages[contact.messages.length - 1].date }}</div>
+      <!-- Sidebar header section -->
+      <section class="sidebar__header">
+        <!-- Sidebar toolbar -->
+        <div class="sidebar__toolbar toolbar">
+          <figure class="avatar avatar-sm">
+            <img src="https://picsum.photos/50/50" alt="">
+          </figure>
+          <div class="controls-wrapper">
+            <div class="icon-wrapper">
+              <i class="fa-solid fa-circle-notch"></i>
             </div>
-            <div class="chat_last-message">{{ contact.messages[contact.messages.length - 1].text }}</div>
+            <div class="icon-wrapper">
+              <i class="fa-solid fa-plus"></i>
+            </div>
+            <div class="icon-wrapper">
+              <i class="fa-solid fa-ellipsis"></i>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+        <!-- Sidebar search-bar -->
+        <div class="sidebar__search-bar">
+          <div class="search-bar">
+            <div class="search-btn">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <!-- <i class="fa-solid fa-arrow-left"></i> -->
+            </div>
+            <input type="text" name="search" id="search" placeholder="Cerca o inizia una nuova chat">
+          </div>
+        </div>
+      </section>
+
+      <!-- Contacts section -->
+      <section class="contacts">
+        <!-- Contact -->
+        <div class="contact" v-for="(el, i) in contacts" @click="selectChat(el)"
+          :class="{'active' : activeChat === el}">
+          <!-- Contact avatar -->
+          <div class="contact__avatar-wrapper">
+            <figure class="avatar">
+              <img :src="el.avatar" alt="">
+            </figure>
+          </div>
+          <!-- Contact info -->
+          <div class="contact__info">
+            <div class="contact__title-wrapper">
+              <h4 class="contact__name">{{ el.name }}</h4>
+              <p class="contact__date">{{ el.messages[el.messages.length - 1].date }}</p>
+            </div>
+            <div class="contact__text">{{ el.messages[el.messages.length - 1].text }}</div>
+          </div>
+        </div>
+      </section>
+    </div>
 
     <!-- MAIN CONTENT -->
-    <section class="selected-chat" v-for="contact in contacts" v-if="contact.active">
-      <!-- Header -->
-      <div class="selected-chat_header">
-        <div class="selected-chat_user-info">
-          <div class="avatar">
-            <img :src="contact.avatar" alt="">
-          </div>
-          <div class="selected-chat_user-desc">
-            <div class="chat_title">{{ contact.name }}</div>
-            <div class="chat_user-state">Online</div>
+    <div class="chat">
+      <!-- Chat header -->
+      <div class="chat__header toolbar">
+        <div class="contact contact-active">
+          <figure class="avatar avatar-sm">
+            <img :src="activeChat.avatar" alt="">
+          </figure>
+          <div class="contact__info">
+            <h4 class="contact__name">{{ activeChat.name }}</h4>
+            <div class="contact__state">Online</div>
           </div>
         </div>
-        <div class="profile-controls">
+        <div class="controls-wrapper">
           <div class="icon-wrapper">
             <i class="fa-solid fa-magnifying-glass"></i>
           </div>
@@ -89,33 +96,30 @@
         </div>
       </div>
 
-      
-      <div class="selected-chat_content">
-        <div v-for="message in contact.messages"
-          :class="{'message-wrapper' : true, 'sent' : message.status === 'sent', 'received' : message.status === 'received'}">
-          <div class="message">
-            <div class="message-text">{{ message.text }}</div>
-            <div class="message-date">{{ message.date }}</div>
-          </div>
+      <!-- Chat messages -->
+      <div class="chat__messages">
+        <div v-for="message in activeChat.messages"
+          :class="{'message' : true, 'sent' : message.status === 'sent', 'received' : message.status === 'received'}">
+          <div class="message-text">{{ message.text }}</div>
+          <!-- <div class="message-date">{{ message.date }}</div> -->
         </div>
-
-      
       </div>
 
-      <!-- Footer -->
-      <div class="selected-chat_footer">
+      <!-- Chat footer -->
+      <div class="chat__footer">
         <div class="icon-wrapper">
           <i class="fa-regular fa-face-smile"></i>
         </div>
         <div class="icon-wrapper">
           <i class="fa-solid fa-paperclip"></i>
         </div>
-        <input type="text" name="write" id="write" placeholder="Scrivi un messaggio">
+        <input type="text" name="write" id="write" placeholder="Scrivi un messaggio" v-model="writeInputValue"
+          @keyup.enter="addMessage(activeChat, writeInputValue, true); generateAnswer(activeChat);">
         <div class="icon-wrapper">
           <i class="fa-solid fa-microphone"></i>
         </div>
       </div>
-    </section>
+    </div>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>

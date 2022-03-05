@@ -1,8 +1,9 @@
-var app = new Vue({
+const app = new Vue({
   el: '#app',
   data: {
     // Array oggetti
-    activeIndex: 0,
+    activeChat: null,
+    writeInputValue: '',
     contacts: [
       {
         name: 'Michele',
@@ -94,20 +95,30 @@ var app = new Vue({
     ],
   },
   methods: {
-    selectChat: function (el, i, array) {
-      array.forEach((element) => {
-        element.active = false;
-      });
+    selectChat: function (el) {
+      if (el !== null) this.activeChat = el;
+    },
+    addMessage: function (chat, text, sent) {
+      const message = {
+        date: new Date(),
+        text: text,
+        status: 'received',
+      };
 
-      el.active = true;
-      activeIndex = i;
-      console.log(activeIndex);
+      if (sent) {
+        message.status = 'sent';
+      }
+
+      chat.messages.push(message);
+    },
+    generateAnswer: function (chat) {
+      setTimeout((el) => {
+        this.addMessage(chat, 'ok', false);
+      }, 2000);
     },
   },
+  mounted() {
+    this.selectChat(this.contacts[0]);
+    // console.log(this.activeChat);
+  },
 });
-
-function getRandomIntInclusive(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
