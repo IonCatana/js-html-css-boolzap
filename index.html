@@ -42,10 +42,11 @@
         <div class="sidebar__search-bar">
           <div class="search-bar">
             <div class="search-btn">
-              <i class="fa-solid fa-magnifying-glass"></i>
-              <!-- <i class="fa-solid fa-arrow-left"></i> -->
+              <i class="fa-solid fa-magnifying-glass" v-if="searchInputValue === ''"></i>
+              <i class="fa-solid fa-arrow-left" v-if="searchInputValue !== ''"></i>
             </div>
-            <input type="text" name="search" id="search" placeholder="Cerca o inizia una nuova chat">
+            <input type="text" v-model="searchInputValue" @keyup="filterContacts"
+              placeholder="Cerca o inizia una nuova chat">
           </div>
         </div>
       </section>
@@ -53,8 +54,8 @@
       <!-- Contacts section -->
       <section class="contacts">
         <!-- Contact -->
-        <div class="contact" v-for="(el, i) in contacts" @click="selectChat(el)"
-          :class="{'active' : activeChat === el}">
+        <div class="contact" v-for="(el, i) in contacts" @click="selectChat(el)" :class="{'active' : activeChat === el}"
+          v-if="el.visible">
           <!-- Contact avatar -->
           <div class="contact__avatar-wrapper">
             <figure class="avatar">
@@ -113,7 +114,7 @@
         <div class="icon-wrapper">
           <i class="fa-solid fa-paperclip"></i>
         </div>
-        <input type="text" name="write" id="write" placeholder="Scrivi un messaggio" v-model="writeInputValue"
+        <input type="text" placeholder="Scrivi un messaggio" v-model="writeInputValue"
           @keyup.enter="addMessage(activeChat, writeInputValue, true); generateAnswer(activeChat);">
         <div class="icon-wrapper">
           <i class="fa-solid fa-microphone"></i>

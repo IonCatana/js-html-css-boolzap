@@ -4,12 +4,12 @@ const app = new Vue({
     // Array oggetti
     activeChat: null,
     writeInputValue: '',
+    searchInputValue: '',
     contacts: [
       {
         name: 'Michele',
         avatar: 'https://picsum.photos/60/60',
         visible: true,
-        active: true,
         messages: [
           {
             date: '10/01/2020 15:30:55',
@@ -32,7 +32,6 @@ const app = new Vue({
         name: 'Fabio',
         avatar: 'https://picsum.photos/61/61',
         visible: true,
-        active: false,
         messages: [
           {
             date: '20/03/2020 16:30:00',
@@ -55,7 +54,6 @@ const app = new Vue({
         name: 'Samuele',
         avatar: 'https://picsum.photos/62/62',
         visible: true,
-        active: false,
         messages: [
           {
             date: '28/03/2020 10:10:40',
@@ -78,7 +76,6 @@ const app = new Vue({
         name: 'Luisa',
         avatar: 'https://picsum.photos/63/63',
         visible: true,
-        active: false,
         messages: [
           {
             date: '10/01/2020 15:30:55',
@@ -116,9 +113,26 @@ const app = new Vue({
         this.addMessage(chat, 'ok', false);
       }, 2000);
     },
+    filterContacts: function () {
+      if (this.searchInputValue === '') {
+        this.contacts.forEach((el) => {
+          el.visible = true;
+        });
+      } else {
+        this.contacts.forEach((el) => {
+          const name = el.name.toLowerCase();
+          const filter = this.searchInputValue.toLowerCase();
+
+          if (name.includes(filter)) {
+            el.visible = true;
+          } else {
+            el.visible = false;
+          }
+        });
+      }
+    },
   },
   mounted() {
     this.selectChat(this.contacts[0]);
-    // console.log(this.activeChat);
   },
 });
